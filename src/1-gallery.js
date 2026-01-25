@@ -1,3 +1,6 @@
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
 const images = [
     {
         preview: 'https://cdn.pixabay.com/photo/2019/05/14/16/43/rchids-4202820__480.jpg',
@@ -36,10 +39,10 @@ const galleryContainer = document.querySelector('.gallery');
 const galleryMarkup = images
     .map(({ preview, original, description }) => {
         return `
-        <li class="gallery__item">
-            <a class="gallery__link" href="${original}">
+        <li class="gallery-item">
+            <a class="gallery-link" href="${original}">
                 <img
-                    class="gallery__image"
+                    class="gallery-image"
                     src="${preview}"
                     alt="${description}"
                 />
