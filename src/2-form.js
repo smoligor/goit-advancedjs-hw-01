@@ -1,43 +1,42 @@
 const form = document.querySelector('.feedback-form');
 const localStorageKey = 'feedback-form-state';
 
+const formData = {
+    email: "",
+    message: ""
+};
+
 // Load data from localStorage
 const savedData = JSON.parse(localStorage.getItem(localStorageKey));
 if (savedData) {
-    form.elements.email.value = savedData.email || '';
-    form.elements.message.value = savedData.message || '';
+    formData.email = savedData.email || "";
+    formData.message = savedData.message || "";
+    form.elements.email.value = formData.email;
+    form.elements.message.value = formData.message;
 }
 
 // Input event listener to save data
 form.addEventListener('input', (event) => {
     const { name, value } = event.target;
-    const currentState = JSON.parse(localStorage.getItem(localStorageKey)) || {};
-    currentState[name] = value.trim();
-    localStorage.setItem(localStorageKey, JSON.stringify(currentState));
+    formData[name] = value.trim();
+    localStorage.setItem(localStorageKey, JSON.stringify(formData));
 });
 
 // Submit event listener
 form.addEventListener('submit', (event) => {
     event.preventDefault();
 
-    const email = form.elements.email.value.trim();
-    const message = form.elements.message.value.trim();
-
     // Check if fields are empty
-    if (!email || !message) {
-        alert('All form fields must be filled in');
+    if (!formData.email || !formData.message) {
+        alert('Fill please all fields');
         return;
     }
 
-    // Validate email using validator.js (from CDN)
-    if (!window.validator.isEmail(email)) {
-        alert('Please enter a valid email address');
-        return;
-    }
+    console.log(formData);
 
-    console.log({ email, message });
-
-    // Clear form and localStorage
+    // Clear everything
     localStorage.removeItem(localStorageKey);
+    formData.email = "";
+    formData.message = "";
     form.reset();
 });
